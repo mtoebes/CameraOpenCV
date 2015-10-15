@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="view_types">
+        <item >none</item>
+        <item >red</item>
+        <item >green</item>
+        <item >blue</item>
+        <item >gray</item>
+        <item >sobel_x</item>
+        <item >sobel_y</item>
+        <item >laplacian</item>
+    </string-array>
+</resources>
