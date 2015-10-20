@@ -8,7 +8,6 @@ import android.view.View;
 public class MainActivity extends Activity {
 
     static {
-        // If you use opencv 2.4, System.loadLibrary("opencv_java")
         System.loadLibrary("opencv_java3");
     }
 
