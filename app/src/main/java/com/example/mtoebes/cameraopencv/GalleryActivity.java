@@ -77,8 +77,7 @@ public class GalleryActivity extends ListActivity  {
         public void setFile(File file) {
             mFile = file;
             mFileName.setText(file.getName());
-            String thumbFile  = PhotoHelper.getThumbnailFile(mFile);
-            mThumbnail.setImageBitmap(PhotoHelper.readIntoBitmap(thumbFile));
+            mThumbnail.setImageBitmap(PhotoHelper.readIntoBitmap(file));
             mDeleteButton.setOnClickListener(this);
             mThumbnail.setOnClickListener(this);
         }
@@ -90,7 +89,7 @@ public class GalleryActivity extends ListActivity  {
                 PhotoHelper.removeFile(mFile);
             } else {
                 Intent intent = new Intent(mContext, ViewActivity.class);
-                intent.putExtra(ViewActivity.EXTRA_FILE_NAME, mFile.getName());
+                intent.putExtra(ViewActivity.EXTRA_FILE_PATH, mFile.getPath());
                 startActivity(intent);
             }
         }

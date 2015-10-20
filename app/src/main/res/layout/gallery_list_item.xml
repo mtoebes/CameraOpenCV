@@ -6,9 +6,13 @@
 
     <ImageView
         android:id="@+id/thumbnail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
+        android:layout_width="@dimen/thumbnail_width"
+        android:layout_height="@dimen/thumbnail_height"
+        android:maxWidth="@dimen/thumbnail_width"
+        android:maxHeight="@dimen/thumbnail_height"
+        android:layout_centerVertical="true"
+        android:scaleType="centerInside"
+        android:adjustViewBounds="true">
     </ImageView>
 
     <TextView

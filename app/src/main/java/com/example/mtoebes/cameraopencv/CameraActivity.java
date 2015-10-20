@@ -32,7 +32,7 @@ public class CameraActivity extends Activity implements CvCameraViewListener2 {
     }
 
     public void takePhoto(View view) {
-        PhotoHelper.saveCameraImage(mRgba);
+        PhotoHelper.saveMat(mRgba);
     }
 
     @Override
