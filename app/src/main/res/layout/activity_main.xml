@@ -17,6 +17,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/gallery_button"
         android:layout_below="@+id/camera_button"
         android:text="open Gallery"
         android:onClick="openGallery"
