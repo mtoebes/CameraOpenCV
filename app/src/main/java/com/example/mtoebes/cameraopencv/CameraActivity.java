@@ -15,8 +15,9 @@ import org.opencv.core.Mat;
  */
 public class CameraActivity extends Activity implements CvCameraViewListener2 {
     private static final String TAG = "CameraActivity";
-    private Mat mRgba;
     private CameraBridgeViewBase mOpenCvCameraView;
+
+    private Mat mRgba; // Mat to hold current camera frame in
 
     // Called as part of the activity lifecycle when this activity is starting.
     @Override
