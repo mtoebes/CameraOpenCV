@@ -66,7 +66,6 @@ public class PhotoHelper {
         return bitmap;
     }
 
-
     /**
      * Remove the given File
      * @param file File to remove
