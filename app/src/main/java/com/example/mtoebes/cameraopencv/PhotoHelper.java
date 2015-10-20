@@ -24,44 +24,74 @@ public class PhotoHelper {
 
     public static final String DEFAULT_TAG = "RBG";
 
+    // Identifiers that make up a filename
     private static final String IMG = "IMG_";
     private static final String TAG = "_TAG_";
     private static final String EXT = ".jpg";
 
+    // Name of the directory to store the images in
     private static final String IMAGE_DIRECTORY_NAME = "CameraOpenCV";
 
+    // Directory of public storage for images
     private static final File PUBLIC_STORAGE =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
+    // Directory of storage for our images
     private static final File IMAGE_DIRECTORY = createDirectory(PUBLIC_STORAGE, IMAGE_DIRECTORY_NAME);
+
     private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMdd_HHmmss");
 
-    public static void saveMatToFile(File file, Mat mat) {
+    /**
+     * Saves a mat to a file
+     * @param mat mat to save
+     * @param file location to save to
+     */
+    public static void saveMatToFile(Mat mat, File file) {
         Imgcodecs.imwrite(file.getPath(), mat);
     }
 
+    /**
+     * Saves a mat to a file who's name has been updated with newTag
+     * @param mat mat to save
+     * @param file location to save at
+     * @param newTag tag to update the filename with
+     * @return location mat was saved to
+     */
     public static File saveMat(Mat mat, File file, String newTag) {
         File newFile = generateFile(file.getParentFile(), file.getName(), newTag);
-        saveMatToFile(file, mat);
+        saveMatToFile(mat, file);
         return newFile;
     }
 
-    public static File saveMat(Mat mat, String tag) {
-        File newFile = generateFile(IMAGE_DIRECTORY, null, tag);
-        saveMatToFile(newFile, mat);
-        return newFile;
-    }
-
+    /**
+     * Saves a mat to file under IMAGE_DIRECTORY
+     * filename will be based on current time and have the default tag
+     * @param mat mat to save
+     * @return location mat was saved to
+     */
     public static File saveMat(Mat mat) {
-        return saveMat(mat, DEFAULT_TAG);
+        File newFile = generateFile(IMAGE_DIRECTORY, null, DEFAULT_TAG);
+        saveMatToFile(mat, newFile);
+        return newFile;
     }
 
+    /**
+     * Reads mat from a file
+     * @param file file to read from
+     * @return mat saved in file
+     */
     public static Mat getMat(File file) {
         return Imgcodecs.imread(file.getPath());
     }
 
+    /**
+     * Reads mat from a file and returns it as a Bitmap
+     * @param file file to read from
+     * @return Bitmap of mat saved in file
+     */
     public static Bitmap readIntoBitmap(File file) {
         Mat mat = getMat(file);
-        Bitmap bitmap = Bitmap.createBitmap(mat.cols(), mat.rows(),Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(mat.cols(), mat.rows(), Bitmap.Config.ARGB_8888);
         Utils.matToBitmap(mat, bitmap);
         return bitmap;
     }
@@ -75,35 +105,67 @@ public class PhotoHelper {
     }
 
     /**
-     * Generates a unique filename based on the time stamp, sets the tag to be DEFAULT_TAG
-     * @return unique filename with tag=DEFAULT_TAG
+     * returns a filename based on the given img and tag values
+     * @param img IMG value
+     * @param tag TAG value
+     * @return filename of the formate IMG_img_TAG_tag.jpg
+     */
+    public static String generateFilename(String img, String tag) {
+        return IMG + img + TAG + tag + EXT;
+    }
+    /**
+     * returns a unique filename based on the timestamp and with the given tag
+     * @return unique filename with the given tag
      */
     public static String generateFilename(String tag) {
-        return IMG + DATE_FORMAT.format(new Date()) + TAG + tag + EXT;
+        return generateFilename(DATE_FORMAT.format(new Date()),tag);
     }
 
-    public static String replaceTag(String filename, String tag) {
-        return filename.substring(0, filename.lastIndexOf(TAG) + TAG.length()) + tag + EXT;
+    /**
+     * returns a new filename with the same IMG values as orgFilename but with TAg value newTag
+     * @param orgFilename name of file to grab IMG value from
+     * @param newTag TAG value to use in the new filename
+     * @return new filename with the IMG value of orgFilename and the TAG value of newTag
+     */
+    public static String replaceTag(String orgFilename, String newTag) {
+        return generateFilename(getIMG(orgFilename), newTag);
     }
 
-    public static File generateFile(File directory, String filename, String tag) {
+    /**
+     * returns a File who's parent is directory and name is filename with TAG value newTag
+     * if filename is null, a new filename is created
+     * @param directory parent to create the file under
+     * @param filename filename to use the IMG value from
+     * @param newTag TAG value to use
+     * @return File with save path as directory/filename but with the TAG newTag
+     */
+    public static File generateFile(File directory, String filename, String newTag) {
         String newFilename;
 
         if(filename == null)
-            newFilename = generateFilename(tag);
+            newFilename = generateFilename(newTag);
          else
-            newFilename = replaceTag(filename, tag);
+            newFilename = replaceTag(filename, newTag);
 
         return new File(directory, newFilename);
     }
 
     /**
-     * gets the tag of the given filename
-     * @param filename name of file to parse tag from
+     * gets the TAG value of the given filename
+     * @param filename name of file to get tag from
      * @return tag of filename
      */
-    public static String getTag(String filename) {
+    public static String getTAG(String filename) {
         return filename.substring(filename.lastIndexOf(TAG) + TAG.length(), filename.lastIndexOf(EXT));
+    }
+
+    /**
+     * gets the IMG value of the given filename
+     * @param filename name of the file to get img from
+     * @return img of the filename
+     */
+    public static String getIMG(String filename) {
+        return filename.substring(filename.lastIndexOf(IMG) + IMG.length(), filename.lastIndexOf(TAG));
     }
 
     /**
@@ -128,7 +190,7 @@ public class PhotoHelper {
 
         public boolean accept(File file) {
             String filename = file.getName();
-            return filename.endsWith(EXT) && mTag.equals(getTag(filename));
+            return filename.endsWith(EXT) && mTag.equals(getTAG(filename));
         }
     }
 
