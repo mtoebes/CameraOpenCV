@@ -37,14 +37,14 @@
     </string-array>
 
     <string-array name="hough_detection_mode_titles">
-        <item>sobel</item>
-        <item>laplacian</item>
-        <item>hough</item>
+        <item>Sobel</item>
+        <item>Laplacian</item>
+        <item>Canny</item>
     </string-array>
 
     <string-array name="hough_detection_mode_values">
-        <item>sobel</item>
-        <item>laplacian</item>
-        <item>hough</item>
+        <item>Sobel</item>
+        <item>Laplacian</item>
+        <item>Canny</item>
     </string-array>
 </resources>
