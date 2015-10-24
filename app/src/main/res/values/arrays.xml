@@ -14,4 +14,41 @@
             <item>canny</item>
             <item>hough</item>
         </string-array>
+
+
+    <string-array name="color_channel_titles">
+        <item>red</item>
+        <item>green</item>
+        <item>blue</item>
+        <item>gray</item>
+    </string-array>
+    <string-array name="color_channel_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="sobel_direction_titles">
+        <item>vertical</item>
+        <item>horizontal</item>
+        <item>both</item>
+    </string-array>
+
+    <string-array name="sobel_direction_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="hough_detection_mode_titles">
+        <item>sobel</item>
+        <item>laplacian</item>
+        <item>hough</item>
+    </string-array>
+
+    <string-array name="hough_detection_mode_values">
+    <item>sobel</item>
+    <item>laplacian</item>
+    <item>hough</item>
+    </string-array>
 </resources>

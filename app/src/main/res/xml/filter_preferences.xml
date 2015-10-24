@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="Color Channel Options"
+        android:key="color_channel_cat">
+        <ListPreference
+            android:key="color_channel_pref"
+            android:title="Color Channel"
+            android:summary="Choose which color channel to show"
+            android:entries="@array/color_channel_titles"
+            android:entryValues="@array/color_channel_values"
+            android:defaultValue="0" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Gaussian Options"
+        android:key="gaussian_cat">
+        <EditTextPreference
+            android:key="gaussian_ksize_pref"
+            android:title="Gaussian Kernal Size"
+            android:summary="Set the size of the kernel"
+            android:inputType="number"
+            android:defaultValue="5" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Sobel Options"
+        android:key="sobel_cat">
+        <EditTextPreference
+            android:key="sobel_ksize_pref"
+            android:title="Kernel Size"
+            android:summary="Set the size of the kernel"
+            android:inputType="number"
+            android:defaultValue="3" />
+        <ListPreference
+            android:key="sobel_dir_pref"
+            android:title="Direction"
+            android:summary="Choose what direction(s) to perform the filter on"
+            android:entries="@array/sobel_direction_titles"
+            android:entryValues="@array/sobel_direction_values"
+            android:defaultValue="0" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Laplacian Options"
+        android:key="laplacian_cat">
+        <EditTextPreference
+            android:key="laplacian_ksize_pref"
+            android:title="Kernal Size"
+            android:summary="Set the size of the kernel"
+            android:inputType="number"
+            android:defaultValue="5" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Canny Options"
+        android:key="canny_cat">
+        <EditTextPreference
+            android:key="canny_lower_thresh_pref"
+            android:title="Lower Threshold"
+            android:summary="Set the Canny lower threshold value"
+            android:inputType="number"
+            android:defaultValue="100" />
+        <EditTextPreference
+            android:key="canny_upper_thresh_pref"
+            android:title="Upper Threshold"
+            android:summary="Set the Canny upper threshold value"
+            android:inputType="number"
+            android:defaultValue="200" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Hough Options"
+        android:key="hough_cat">
+        <EditTextPreference
+            android:key="hough_threshold_pref"
+            android:title="Hough Threshold"
+            android:summary="Set the minimum number of points needed for a line"
+            android:inputType="number"
+            android:defaultValue="80" />
+        <EditTextPreference
+            android:key="hough_max_gap_pref"
+            android:title="Max Line Gap"
+            android:summary="Set the maximum gap between points of the same line"
+            android:inputType="number"
+            android:defaultValue="10" />
+        <EditTextPreference
+            android:key="hough_min_len_pref"
+            android:title="Min Line Length"
+            android:summary="Set the minimum length of lines"
+            android:inputType="number"
+            android:defaultValue="30" />
+        <ListPreference
+            android:key="hough_detection_mode_pref"
+            android:title="Line Detection Mode Filter"
+            android:summary="Choose which line Filter to run Hough on"
+            android:entries="@array/hough_detection_mode_titles"
+            android:entryValues="@array/hough_detection_mode_values"
+            android:defaultValue="Canny" />
+    </PreferenceCategory>
+</PreferenceScreen>
