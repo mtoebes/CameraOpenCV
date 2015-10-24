@@ -23,4 +23,12 @@
         android:onClick="openGallery"
         />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gallery_button"
+        android:id="@+id/pref_button"
+        android:text="open Preferences"
+        android:onClick="openPrefs"
+        />
 </RelativeLayout>

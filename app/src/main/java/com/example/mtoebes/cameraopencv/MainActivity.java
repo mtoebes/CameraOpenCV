@@ -36,5 +36,10 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, GalleryActivity.class);
         startActivity(intent);
     }
+
+    public void openPrefs(View view) {
+        Intent intent = new Intent(this, FilterPreferenceActivity.class);
+        startActivity(intent);
+    }
 }
 
