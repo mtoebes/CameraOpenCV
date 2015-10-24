@@ -10,12 +10,12 @@ buildscript {
 }
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 19
     buildToolsVersion "19.1.0"
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 23
+        targetSdkVersion 19
         versionCode 2480
         versionName "2.4.8"
     }
