@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <string-array name="transforms">
-            <item>Original</item>
-            <item>Color Mask</item>
-            <item>Gaussian</item>
-            <item>Sobel</item>
-            <item>Laplacian</item>
-            <item>Canny</item>
-            <item>Hough</item>
-        </string-array>
-    
+    <string-array name="transforms">
+        <item>Original</item>
+        <item>Color Mask</item>
+        <item>Gaussian</item>
+        <item>Sobel</item>
+        <item>Laplacian</item>
+        <item>Canny</item>
+        <item>Hough</item>
+    </string-array>
+
     <string-array name="color_channel_titles">
         <item>red</item>
         <item>green</item>
         <item>blue</item>
         <item>gray</item>
     </string-array>
+
     <string-array name="color_channel_values">
         <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
     </string-array>
+
     <string-array name="sobel_direction_titles">
         <item>vertical</item>
         <item>horizontal</item>
@@ -41,8 +43,8 @@
     </string-array>
 
     <string-array name="hough_detection_mode_values">
-    <item>sobel</item>
-    <item>laplacian</item>
-    <item>hough</item>
+        <item>sobel</item>
+        <item>laplacian</item>
+        <item>hough</item>
     </string-array>
 </resources>
