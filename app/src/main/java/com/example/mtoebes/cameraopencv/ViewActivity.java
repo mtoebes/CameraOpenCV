@@ -1,8 +1,10 @@
 package com.example.mtoebes.cameraopencv;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -44,7 +46,7 @@ public class ViewActivity extends Activity implements OnItemSelectedListener {
     private File mFile; // File to get mSrcMat from
     private Bitmap mBitmap; // Bitmap use hold Mat's in View friendly form
     private ImageView mImage; // View to display mBitmap
-
+    private Spinner mSpinner;
     private FilteredMat mFilteredMat;
 
     @Override
@@ -62,12 +64,24 @@ public class ViewActivity extends Activity implements OnItemSelectedListener {
         // get the Mat at mFile, create a bitmap from it, and set it as the display image
         mSrcMat = PhotoHelper.getMat(mFile);
         mBitmap = Bitmap.createBitmap(mSrcMat.cols(), mSrcMat.rows(), Bitmap.Config.ARGB_8888);
-        setImage(mSrcMat);
+
+        mSpinner = (Spinner) findViewById(R.id.filter_spinner);
+        mSpinner.setOnItemSelectedListener(this);
 
         mFilteredMat = new FilteredMat(getApplicationContext());
         mFilteredMat.update(mSrcMat);
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        spinner.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.v(TAG, "onResume");
+        View view = mSpinner.getSelectedView();
+        String tag = "";
+        if(view != null) {
+            tag = (String) ((TextView) view).getText();
+        }
+        setImage(mFilteredMat.get(tag));
     }
 
     /**
@@ -101,4 +115,9 @@ public class ViewActivity extends Activity implements OnItemSelectedListener {
      */
     @Override
     public void onNothingSelected(AdapterView<?> parent) { /* do nothing */ }
+
+    public void openPrefs(View view) {
+        Intent intent = new Intent(this, FilterPreferenceActivity.class);
+        startActivity(intent);
+    }
 }

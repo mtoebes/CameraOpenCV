@@ -1,8 +1,12 @@
 package com.example.mtoebes.cameraopencv;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -12,6 +16,9 @@ import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import org.opencv.core.Mat;
+
+import java.io.File;
+import android.support.v7.widget.Toolbar;
 
 /*
  * CameraActivity opens the back camera and displays the view to the screen.
@@ -30,9 +37,10 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, A
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        mFilteredMat = new FilteredMat(getApplicationContext());
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        Spinner spinner = (Spinner) findViewById(R.id.filter_spinner);
         spinner.setOnItemSelectedListener(this);
+
+        mFilteredMat = new FilteredMat(getApplicationContext());
 
         mOpenCvCameraView = (CameraBridgeViewBase)findViewById(R.id.surface_view);
         mOpenCvCameraView.setCvCameraViewListener(this);
@@ -55,7 +63,10 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, A
 
     // onClick event that is called when the button with id "take_photo_button" is pressed
     public void takePhoto(View view) {
-        PhotoHelper.saveMat(mRgba);
+        File imgFile = PhotoHelper.saveMat(mRgba);
+        Intent intent = new Intent(this.getBaseContext(), ViewActivity.class);
+        intent.putExtra(ViewActivity.EXTRA_FILE_PATH, imgFile.getPath());
+        startActivity(intent);
     }
 
     // This method is invoked when camera preview has started.
@@ -86,5 +97,10 @@ public class CameraActivity extends Activity implements CvCameraViewListener2, A
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    public void openPrefs(View view) {
+        Intent intent = new Intent(this, FilterPreferenceActivity.class);
+        startActivity(intent);
     }
 }

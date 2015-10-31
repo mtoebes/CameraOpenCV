@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilteredMat {
+    private static final String TAG = "FilterMat";
     private static final int DEPTH = CvType.CV_8U;
     private static final double D_RHO = 1;
     private static final double D_THETA = Math.PI/180;
@@ -24,28 +26,24 @@ public class FilteredMat {
     private static final String
             orignal_tag = "Original", color_tag = "Color Mask", blur_tag = "Gaussian",
             sobel_tag = "Sobel", laplacian_tag = "Laplacian", canny_tag = "Canny", hough_tag = "Hough";
-    
-    int channel_num;
-    int gaussian_ksize;
-    int sobel_ksize, sobel_dir, sobel_dx, sobel_dy;
-    int laplacian_ksize;
-    int canny_lowerThreshold, canny_upperThreshold;
-    int hough_threshold, hough_minLinLength, hough_maxLineGap;
-    String hough_mode;
 
-    Mat mSrcMat, mGrayMat, mBlurMat;
+    private static int channel_num;
+    private static int gaussian_ksize;
+    private static int sobel_ksize, sobel_dir, sobel_dx, sobel_dy;
+    private static int laplacian_ksize;
+    private static int canny_lowerThreshold, canny_upperThreshold;
+    private static int hough_threshold, hough_minLinLength, hough_maxLineGap;
+    private static String hough_mode;
+
+    Mat mSrcMat;
     String mTag = orignal_tag;
     public FilteredMat(Context context) {
         loadPreferences(context);
         mSrcMat = new Mat();
-        mGrayMat = new Mat();
-        mBlurMat = new Mat();
     }
 
     public Mat update(Mat srcMat) {
         mSrcMat = srcMat;
-        getChannel(srcMat, mGrayMat);
-        getGaussianBlur(mGrayMat, mBlurMat);
         return get();
     }
 
@@ -63,15 +61,15 @@ public class FilteredMat {
             case orignal_tag:
                 return mSrcMat;
             case blur_tag:
-                return mBlurMat;
+                return getGaussianBlur(get(color_tag), resMat);
             case color_tag:
-                return mGrayMat;
+                return getChannel(mSrcMat, resMat);
             case sobel_tag:
-                return getSobel(mBlurMat, resMat);
+                return getSobel(get(blur_tag), resMat);
             case laplacian_tag:
-                return getLaplacian(mBlurMat, resMat);
+                return getLaplacian(get(blur_tag), resMat);
             case canny_tag:
-                return getCanny(mBlurMat, resMat);
+                return getCanny(get(blur_tag), resMat);
             case hough_tag:
                 Mat houghSrcMat = get(hough_mode);
                 return getHoughMat(houghSrcMat, resMat);
@@ -132,7 +130,7 @@ public class FilteredMat {
         return resMat;
     }
 
-    private void loadPreferences(Context context) {
+    public static void loadPreferences(Context context) {
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(context);
         channel_num = Integer.parseInt(SP.getString("color_channel_pref", "0"));
         gaussian_ksize = Integer.parseInt(SP.getString("gaussian_ksize_pref", "5"));
