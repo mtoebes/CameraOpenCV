@@ -6,4 +6,5 @@ Once saved, we can perform several image processing techniques to parse informat
 This project makes use of the OpenCV library to perform matrix operations that are normally very complicated to write in native java. 
 
 openCV : http://docs.opencv.org/java/2.4.9/
+
 android : http://developer.android.com/reference/packages.html
